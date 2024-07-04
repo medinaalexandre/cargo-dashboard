@@ -1,0 +1,48 @@
+name: cargo-dashboard-api
+
+services:
+  php-fpm:
+    user: "1000"
+    build: docker/php
+    working_dir: /var/www/app
+    volumes:
+      - .:/var/www/app
+    networks:
+      - cargo-dashboard-network
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+  pgsql:
+    image: postgres:15
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - cargo-dashboard-pgsql:/var/lib/postgresql/data
+      - ./docker/pgsql/create-testing-database.sql:/docker-entrypoint-initdb.d/create-testing-database.sql
+    networks:
+      -  cargo-dashboard-network
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - .:/var/www/app
+      - ./docker/nginx/ssl/localhost.crt:/etc/ssl/certs/localhost.crt
+      - ./docker/nginx/ssl/localhost.key:/etc/ssl/private/localhost.key
+      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - cargo-dashboard-network
+
+networks:
+  cargo-dashboard-network:
+    driver: bridge
+
+volumes:
+  cargo-dashboard-pgsql:
+    driver: local
