@@ -1,6 +1,6 @@
 <script setup lang="ts">
 defineProps<{
-    number: string;
+    number: string | number | undefined;
     description: string;
     numberPrefix?: string;
     numberSuffix?: string;
@@ -15,7 +15,7 @@ defineProps<{
     >
         <v-card-title class="text-deep-purple-accent-2">
             {{ numberPrefix }}
-            <span class="text-h3 font-weight-black">{{ number }}</span>
+            <span class="text-h3 font-weight-black">{{ number ?? '...' }}</span>
             {{ numberSuffix }}
         </v-card-title>
         <v-card-subtitle class="deep-purple-lighten-5">{{

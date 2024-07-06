@@ -1,63 +1,3 @@
-<template>
-    <v-container>
-        <v-responsive>
-            <v-row>
-                <v-col cols="12">
-                    <h4 class="text-h4">Estado do pátio</h4>
-                </v-col>
-                <v-col cols="4">
-                    <big-number-card
-                        number="48"
-                        description="containers parados"
-                    />
-                </v-col>
-                <v-col cols="4">
-                    <big-number-card
-                        number-prefix="R$"
-                        number="1.2M"
-                        description="valor em mercadorias"
-                    />
-                </v-col>
-                <v-col cols="4">
-                    <big-number-card
-                        number="40"
-                        number-suffix="%"
-                        description="espaço livre"
-                    />
-                </v-col>
-            </v-row>
-            <v-row>
-                <v-col cols="6">
-                    <v-card>
-                        <v-card-title
-                            >Containers parados em dias por
-                            empresa</v-card-title
-                        >
-                        <v-card-item>
-                            <bar
-                                :options="barChartOptions"
-                                :data="barChartData"
-                            ></bar>
-                        </v-card-item>
-                    </v-card>
-                </v-col>
-                <v-col cols="6">
-                    <v-card>
-                        <v-card-title>Destinos</v-card-title>
-                        <v-card-item>
-                            <apexchart
-                                type="treemap"
-                                :options="chartOptions"
-                                :series="series"
-                            ></apexchart>
-                        </v-card-item>
-                    </v-card>
-                </v-col>
-            </v-row>
-        </v-responsive>
-    </v-container>
-</template>
-
 <script lang="ts" setup>
 import BigNumberCard from '@/components/BigNumberCard.vue';
 import { Bar } from 'vue-chartjs';
@@ -71,8 +11,18 @@ import {
     Title,
     Tooltip,
 } from 'chart.js';
+import { Container } from '@/entities/Container';
+import { useQuery } from '@tanstack/vue-query';
+import { DashboardRequest } from '@/entities/Containers.types';
+import { reactive } from 'vue';
 
 ChartJS.register(Title, Tooltip, BarElement, CategoryScale, LinearScale);
+const filters: DashboardRequest = reactive<DashboardRequest>({});
+const fetchData = async () => await Container.dashboardData(filters);
+const { data } = useQuery({
+    queryKey: ['dashboard', filters],
+    queryFn: fetchData,
+});
 
 const barChartData: ChartData<'bar'> = {
     labels: ['Samsung', 'Apple', 'Sony', 'Microsoft', 'Nintendo'],
@@ -177,3 +127,63 @@ const chartOptions = {
     },
 };
 </script>
+
+<template>
+    <v-container>
+        <v-responsive>
+            <v-row>
+                <v-col cols="12">
+                    <h4 class="text-h4">Estado do pátio</h4>
+                </v-col>
+                <v-col cols="4">
+                    <big-number-card
+                        :number="data?.stopped_containers"
+                        description="containers parados"
+                    />
+                </v-col>
+                <v-col cols="4">
+                    <big-number-card
+                        number-prefix="R$"
+                        :number="data?.contents_price"
+                        description="valor em mercadorias"
+                    />
+                </v-col>
+                <v-col cols="4">
+                    <big-number-card
+                        :number="data?.usage_percentage"
+                        number-suffix="%"
+                        description="espaço em uso"
+                    />
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col cols="6">
+                    <v-card>
+                        <v-card-title
+                            >Containers parados em dias por
+                            empresa</v-card-title
+                        >
+                        <v-card-item>
+                            <bar
+                                :options="barChartOptions"
+                                :data="barChartData"
+                            ></bar>
+                        </v-card-item>
+                    </v-card>
+                </v-col>
+                <v-col cols="6">
+                    <v-card>
+                        <v-card-title>Destinos</v-card-title>
+                        <v-card-item>
+                            <apexchart
+                                type="treemap"
+                                :options="chartOptions"
+                                :series="series"
+                            ></apexchart>
+                        </v-card-item>
+                    </v-card>
+                </v-col>
+            </v-row>
+        </v-responsive>
+    </v-container>
+</template>

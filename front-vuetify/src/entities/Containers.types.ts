@@ -23,7 +23,15 @@ export interface ContainerListResponse {
     total: number;
 }
 
-export interface ContainerListRequest {
+export interface DashboardDataResponse {
+    stopped_containers: number;
+    contents_price: string;
+    usage_percentage: number;
+}
+
+export interface ContainerListRequest extends DashboardRequest {
     page?: number;
     per_page?: number;
 }
+
+export interface DashboardRequest {}

@@ -14,7 +14,6 @@ const { data } = useQuery({
     queryKey: ['container', filters],
     queryFn: fetchData,
 });
-const openCards = reactive<Array<number>>([]);
 
 const expandedCards = ref(new Set<number>());
 const toggleExpandCard = (index: number) => {

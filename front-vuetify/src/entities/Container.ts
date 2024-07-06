@@ -3,6 +3,8 @@ import { AxiosResponse } from 'axios';
 import {
     ContainerListRequest,
     ContainerListResponse,
+    DashboardDataResponse,
+    DashboardRequest,
 } from '@/entities/Containers.types';
 
 class ContainerEntity {
@@ -10,6 +12,12 @@ class ContainerEntity {
         return await Api.get('/container', {
             params: filters,
         }).then((res: AxiosResponse<ContainerListResponse>) => res.data);
+    };
+
+    dashboardData = async (filters: DashboardRequest) => {
+        return await Api.get('/dashboard', {
+            params: filters,
+        }).then((res: AxiosResponse<DashboardDataResponse>) => res.data);
     };
 }
 
