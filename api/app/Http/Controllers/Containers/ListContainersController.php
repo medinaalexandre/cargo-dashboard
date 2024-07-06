@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ListContainersController extends Controller
 {
     public function __construct(
-        private ListContainersUseCase $useCase
+        private readonly ListContainersUseCase $useCase
     ) {}
 
     public function __invoke(ListContainerRequest $request): JsonResponse

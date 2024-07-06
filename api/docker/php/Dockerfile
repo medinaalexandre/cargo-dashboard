@@ -3,6 +3,7 @@ FROM php:8.3-fpm-alpine
 RUN apk update && apk --no-cache add bash
 
 RUN apk add --no-cache postgresql-dev && docker-php-ext-install pdo_pgsql
+RUN docker-php-ext-install intl
 
 RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     &&  apk add --no-cache --update linux-headers

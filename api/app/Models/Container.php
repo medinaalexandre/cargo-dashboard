@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enum\InspectionStatus;
 use Database\Factories\ContainerFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,11 +13,11 @@ use Illuminate\Support\Carbon;
  * @property int $id
  * @property string $label
  * @property string $company
- * @property string $inspection_status
+ * @property InspectionStatus $inspection_status
  * @property string $packing_list
  * @property int $items_count
- * @property string $arrival_at
- * @property string $departure_at
+ * @property Carbon $arrival_at
+ * @property Carbon|null $departure_at
  * @property float $weight
  * @property string $origin
  * @property string $destination
@@ -50,4 +51,8 @@ use Illuminate\Support\Carbon;
 class Container extends Model
 {
     use HasFactory;
+
+    public $casts = [
+        'inspection_status' => InspectionStatus::class,
+    ];
 }

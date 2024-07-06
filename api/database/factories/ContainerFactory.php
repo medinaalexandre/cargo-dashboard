@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enum\InspectionStatus;
 use App\Models\Container;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,7 +19,7 @@ class ContainerFactory extends Factory
         return [
             'label' => strtoupper("{$this->faker->lexify()}-{$this->faker->numerify('#######')}-{$this->faker->lexify('?')}"),
             'company' => $this->faker->company(),
-            'inspection_status' => $this->faker->randomElement(['A', 'R']),
+            'inspection_status' => $this->faker->randomElement(InspectionStatus::cases()),
             'packing_list' => $this->faker->text(300),
             'items_count' => $this->faker->numberBetween(1, 50),
             'arrival_at' => $arrivalAt,

@@ -16,10 +16,14 @@ final readonly class EloquentContainerRepository implements ContainerRepository
         $query = $this->model->newQuery();
 
         return $query
-            ->paginate(
-                perPage: $filters['per_page'] ?? 10,
-                page: $filters['page']  ?? 1
-            )
+            ->offset(($filters['page'] -  1) * $filters['per_page'])
+            ->limit($filters['per_page'])
+            ->get()
             ->toArray();
+    }
+
+    public function countByFilters(array $filters): int
+    {
+        return $this->model->newQuery()->count();
     }
 }
