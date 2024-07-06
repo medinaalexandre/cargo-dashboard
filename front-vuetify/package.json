@@ -10,16 +10,12 @@
     "dependencies": {
         "@mdi/font": "6.2.95",
         "@tanstack/vue-query": "^5.50.1",
-        "@types/chart.js": "^2.9.41",
-        "apexcharts": "^3.49.2",
+        "apexcharts": "^3.50.0",
         "axios": "^1.7.2",
-        "chart.js": "^4.4.3",
-        "chartjs-chart-treemap": "^2.3.1",
         "core-js": "^3.34.0",
         "roboto-fontface": "*",
         "vite-plugin-vue-devtools": "^7.3.5",
         "vue": "^3.4.21",
-        "vue-chartjs": "^5.3.1",
         "vue3-apexcharts": "^1.5.3",
         "vuetify": "^3.5.8"
     },

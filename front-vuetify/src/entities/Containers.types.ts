@@ -23,10 +23,17 @@ export interface ContainerListResponse {
     total: number;
 }
 
+interface LocationCount {
+    location: string;
+    count: number;
+}
+
 export interface DashboardDataResponse {
     stopped_containers: number;
     contents_price: string;
     usage_percentage: number;
+    destinations: Array<LocationCount>;
+    origins: Array<LocationCount>;
 }
 
 export interface ContainerListRequest extends DashboardRequest {
