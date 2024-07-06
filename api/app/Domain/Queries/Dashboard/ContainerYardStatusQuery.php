@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Queries\Dashboard\Charts;
+namespace App\Domain\Queries\Dashboard;
+
+use App\Domain\ContainerYardStatusDto;
 
 interface ContainerYardStatusQuery
 {

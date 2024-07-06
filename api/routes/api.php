@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Containers\ListContainersController;
+use App\Http\Controllers\Dashboard\GetDashboardDataController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/container', ListContainersController::class)->name('containers.list');
+Route::get('/dashboard', GetDashboardDataController::class)->name('dashboard.data');

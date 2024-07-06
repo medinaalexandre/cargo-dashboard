@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Containers;
 
-use App\Application\UseCases\ListContainersUseCase;
+use App\Application\UseCases\ListContainer\ListContainersUseCase;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Container\ListContainerRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;

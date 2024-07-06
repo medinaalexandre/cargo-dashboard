@@ -7,11 +7,11 @@ final readonly class ContainerYard
     private const int CONTAINER_CAPACITY = 150;
 
     public function __construct(
-        private readonly int $containers
+        private readonly int $stoppedContainers
     ) {}
 
     public function getUsagePercentage(): float
     {
-        return $this->containers / self::CONTAINER_CAPACITY;
+        return $this->stoppedContainers / self::CONTAINER_CAPACITY;
     }
 }

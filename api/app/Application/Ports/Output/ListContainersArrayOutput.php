@@ -2,8 +2,8 @@
 
 namespace App\Application\Ports\Output;
 
-use App\Application\UseCases\ListContainerOutputData;
-use App\Application\UseCases\ListContainerOutputPort;
+use App\Application\UseCases\ListContainer\ListContainerOutputData;
+use App\Application\UseCases\ListContainer\ListContainerOutputPort;
 use App\Enum\InspectionStatus;
 use Carbon\Carbon;
 use Illuminate\Support\Number;
@@ -22,17 +22,17 @@ class ListContainersArrayOutput implements ListContainerOutputPort
                 'items_count' => $item['items_count'],
                 'arrival_at' => Carbon::parse($item['arrival_at'])->format('d/m/Y H:i:s'),
                 'departure_at' => Carbon::parse($item['departure_at'])?->format('d/m/Y H:i:s'),
-                'weight' => number_format($item['weight'], 2, ',', '.') . 'kg',
+                'weight' => number_format($item['weight'], 2, ',', '.').'kg',
                 'origin' => $item['origin'],
                 'destination' => $item['destination'],
-                'capacity' => number_format($item['weight'], 2, ',', '.') . 'rem',
+                'capacity' => number_format($item['weight'], 2, ',', '.').'rem',
                 'contents_price_cents' => Number::currency($item['contents_price_cents'], 'BRL'),
             ];
         }, $data->containers);
 
         return [
             'data' => $formattedData,
-            'total' => $data->total
+            'total' => $data->total,
         ];
     }
 }

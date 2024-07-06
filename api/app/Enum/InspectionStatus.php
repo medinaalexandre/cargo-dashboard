@@ -10,7 +10,7 @@ enum InspectionStatus: string
 
     public function toString(): string
     {
-        return match($this) {
+        return match ($this) {
             self::INSPECTION_STATUS_APPROVED => 'Approved',
             self::INSPECTION_STATUS_PENDING => 'Pending',
             self::INSPECTION_STATUS_REJECTED => 'Rejected',

@@ -2,7 +2,4 @@
 
 namespace App\Domain;
 
-class Container
-{
-
-}
+class Container {}

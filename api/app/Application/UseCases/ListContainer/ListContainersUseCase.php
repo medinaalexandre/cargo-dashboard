@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Application\UseCases;
+namespace App\Application\UseCases\ListContainer;
 
 use App\Domain\Repositories\ContainerRepository;
 
 final readonly class ListContainersUseCase
 {
     public const int FIRST_PAGE = 1;
+
     public const int DEFAULT_PER_PAGE = 10;
 
     public function __construct(

@@ -10,7 +10,7 @@ it('can list container', function () {
             'data',
             'last_page',
             'per_page',
-            'total'
+            'total',
         ]);
 });
 
