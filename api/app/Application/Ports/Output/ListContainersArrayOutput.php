@@ -25,7 +25,7 @@ class ListContainersArrayOutput implements ListContainerOutputPort
                 'weight' => number_format($item['weight'], 2, ',', '.').'kg',
                 'origin' => $item['origin'],
                 'destination' => $item['destination'],
-                'capacity' => number_format($item['weight'], 2, ',', '.').'rem',
+                'capacity' => $item['capacity'].'ft',
                 'contents_price_cents' => Number::currency($item['contents_price_cents'], 'BRL'),
             ];
         }, $data->containers);

@@ -1,3 +1,5 @@
+import { FilterOptions } from '@/types';
+
 export interface Container {
     id: number;
     label: string;
@@ -53,7 +55,7 @@ export interface ContainerListRequest extends DashboardRequest {
     per_page?: number;
 }
 
-export interface DashboardRequest {}
+export interface DashboardRequest extends FilterOptions {}
 
 export interface OriginAndDestinationsOptions {
     origin: Array<string>;

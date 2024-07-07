@@ -2,6 +2,9 @@
     <v-responsive class="border rounded"> </v-responsive>
     <v-app :theme="theme">
         <v-app-bar title="Cargo Dashboard" class="px-3" compact>
+            <v-list-item rounded to="/"> Dashboard </v-list-item>
+            <v-list-item rounded to="/containers"> Containers </v-list-item>
+
             <v-btn
                 :icon="
                     theme === 'light'
@@ -43,8 +46,8 @@ const filters = reactive<FilterOptions>({
     origin: [],
     destination: [],
     inspection_status: [],
-    packing_list: null,
-    items_count: null,
+    packing_list: undefined,
+    items_count: undefined,
 });
 
 provide('filters', filters);

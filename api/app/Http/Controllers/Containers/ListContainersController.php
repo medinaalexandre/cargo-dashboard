@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Containers;
 
+use App\Application\UseCases\ListContainer\ListContainerInputData;
 use App\Application\UseCases\ListContainer\ListContainersUseCase;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Container\ListContainerRequest;
@@ -15,7 +16,7 @@ class ListContainersController extends Controller
 
     public function __invoke(ListContainerRequest $request): JsonResponse
     {
-        $containers = $this->useCase->execute($request->validated());
+        $containers = $this->useCase->execute(new ListContainerInputData($request->validated()));
 
         return response()->json($containers);
     }

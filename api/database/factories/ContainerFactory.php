@@ -25,10 +25,10 @@ class ContainerFactory extends Factory
             'items_count' => $this->faker->numberBetween(1, 50),
             'arrival_at' => $arrivalAt,
             'departure_at' => $departureAt->add(new \DateInterval("P{$this->faker->numberBetween(1, 15)}D")),
-            'weight' => $this->faker->randomFloat(2, 10),
+            'weight' => $this->faker->randomFloat(2, 10, 1000),
             'origin' => $this->faker->country(),
             'destination' => $this->faker->country(),
-            'capacity' => $this->faker->randomFloat(2, 1, 2),
+            'capacity' => $this->faker->randomElement([20, 40]),
             'contents_price_cents' => $this->faker->numberBetween(50000, 10000000),
         ];
     }

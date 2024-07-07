@@ -1,96 +1,76 @@
 <script setup lang="ts">
 import { Container } from '@/entities/Container';
 import { useQuery } from '@tanstack/vue-query';
-import { reactive, ref } from 'vue';
+import { inject, reactive, watch } from 'vue';
 import { ContainerListRequest } from '@/entities/Containers.types';
+import { FilterOptions } from '@/types';
 
+const sideBarFilters: FilterOptions = inject('filters') as FilterOptions;
 const filters: ContainerListRequest = reactive<ContainerListRequest>({
     per_page: 10,
     page: 1,
 });
 
-const fetchData = async () => await Container.list(filters);
-const { data } = useQuery({
-    queryKey: ['container', filters],
+const fetchData = async () =>
+    await Container.list({ ...filters, ...sideBarFilters });
+const { isLoading, data } = useQuery({
+    queryKey: ['container', [sideBarFilters, filters]],
     queryFn: fetchData,
 });
 
-const expandedCards = ref(new Set<number>());
-const toggleExpandCard = (index: number) => {
-    if (expandedCards.value.has(index)) {
-        expandedCards.value.delete(index);
-    } else {
-        expandedCards.value.add(index);
-    }
+watch(sideBarFilters, () => {
+    filters.page = 1;
+});
+
+const headers = [
+    { title: 'ID', value: 'id' },
+    { title: 'Etiqueta', value: 'label' },
+    { title: 'Origem', value: 'origin' },
+    { title: 'Destino', value: 'destination' },
+    { title: 'Status', value: 'inspection_status' },
+    { title: 'Empresa', value: 'company' },
+    { title: 'Itens', value: 'items_count' },
+    { title: 'Chegada', value: 'arrival_at' },
+    { title: 'Saída', value: 'departure_at' },
+    { title: 'Capacidade', value: 'capacity' },
+    { title: 'Peso', value: 'weight' },
+];
+
+const getStatusColor = (status: string) => {
+    const map: Record<string, string> = {
+        Aprovado: 'green-accent-1',
+        Pendente: 'light-blue-accent-1',
+        Rejeitado: 'red-accent-1',
+    };
+
+    return map[status] ?? 'grey-lighten-1';
 };
 </script>
 
 <template>
-    <h1>Containers</h1>
     <v-container fluid>
-        <v-row dense>
-            <v-col v-for="(item, idx) in data?.data" :key="item.id">
-                <v-card variant="tonal">
-                    <v-card-title class="text-h5">
-                        {{ item.label }}
-                    </v-card-title>
-                    <v-card-item>
-                        <v-icon
-                            color="deep-purple-accent-2"
-                            icon="mdi-domain"
-                        />
-                        {{ item.company }}
-                    </v-card-item>
-                    <v-card-item>
-                        <v-icon
-                            color="deep-purple-accent-2"
-                            icon="mdi-airplane-takeoff"
-                        />
-                        {{ item.origin }}
-                    </v-card-item>
-                    <v-card-item>
-                        <v-icon
-                            color="deep-purple-accent-2"
-                            icon="mdi-airplane-landing"
-                        />
-                        {{ item.destination }}
-                    </v-card-item>
-                    <v-card-item>
-                        <v-icon
-                            color="deep-purple-accent-2"
-                            icon="mdi-weight"
-                        />
-                        {{ item.weight }}
-                        <v-icon
-                            color="deep-purple-accent-2"
-                            icon="mdi-package"
-                        />
-                        {{ item.items_count }}</v-card-item
-                    >
-                    <v-card-actions>
-                        <v-btn
-                            size="md"
-                            variant="plain"
-                            :icon="
-                                expandedCards.has(idx)
-                                    ? 'mdi-chevron-up'
-                                    : 'mdi-chevron-down'
-                            "
-                            @click="toggleExpandCard(idx)"
-                        />
-                    </v-card-actions>
-                    <v-expand-transition>
-                        <div v-show="expandedCards.has(idx)">
-                            <v-divider />
-                            <v-card-text>
-                                <b>Packing List:</b>
-                                {{ item.packing_list }}
-                            </v-card-text>
-                        </div>
-                    </v-expand-transition>
-                </v-card>
-            </v-col>
-        </v-row>
+        <h1>Containers</h1>
+        <v-data-table-server
+            :page="filters.page"
+            :items-length="data?.total ?? 0"
+            :items-per-page-options="[10, 25, 30, 50, 100]"
+            :headers="headers"
+            :items="data?.data ?? []"
+            :loading="isLoading"
+            @update:items-per-page="(per_page) => (filters.per_page = per_page)"
+            @update:page="(page) => (filters.page = page)"
+            no-filter
+            disable-sort
+            fixed-header
+        >
+            <template #[`item.inspection_status`]="{ item }">
+                <v-chip
+                    size="small"
+                    :color="getStatusColor(item.inspection_status)"
+                    >{{ item.inspection_status }}</v-chip
+                >
+            </template>
+        </v-data-table-server>
     </v-container>
 </template>
 
