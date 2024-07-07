@@ -33,6 +33,11 @@ interface CompanyContainerAvgDay {
     avgDay: number;
 }
 
+interface UsageHistory {
+    date: string;
+    usage: number;
+}
+
 export interface DashboardDataResponse {
     stopped_containers: number;
     contents_price: string;
@@ -40,6 +45,7 @@ export interface DashboardDataResponse {
     destinations: Array<LocationCount>;
     origins: Array<LocationCount>;
     companies_container_avg_day: Array<CompanyContainerAvgDay>;
+    usage_history: Array<UsageHistory>;
 }
 
 export interface ContainerListRequest extends DashboardRequest {

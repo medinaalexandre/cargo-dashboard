@@ -10,6 +10,7 @@ final readonly class GetDashboardDataOutputData
         public float $usagePercentage,
         public array $destinations,
         public array $origins,
-        public array $companiesContainerAvgDay
+        public array $companiesContainerAvgDay,
+        public array $usageHistory,
     ) {}
 }

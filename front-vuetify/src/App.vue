@@ -16,9 +16,7 @@
             />
         </v-app-bar>
         <v-navigation-drawer v-model="drawer" location="left">
-            <v-list>
-                <v-list-item title="Filtros"></v-list-item>
-            </v-list>
+            <Filters />
         </v-navigation-drawer>
         <v-main>
             <v-container>
@@ -30,6 +28,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
+import Filters from '@/components/sidebar/Filters.vue';
 
 const theme = ref(localStorage.getItem('theme') ?? 'dark');
 const toggleTheme = () => {

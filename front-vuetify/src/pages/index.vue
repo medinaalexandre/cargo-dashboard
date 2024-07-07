@@ -6,6 +6,7 @@ import { DashboardRequest } from '@/entities/Containers.types';
 import { reactive } from 'vue';
 import { TreemapConfig } from '@/components/charts/TreemapConfig';
 import barCustomDataLabelConfig from '@/components/charts/BarCustomDataLabelConfig';
+import lineChartConfig from '@/components/charts/LineChartConfig';
 
 const filters: DashboardRequest = reactive<DashboardRequest>({});
 const fetchData = async () => await Container.dashboardData(filters);
@@ -19,9 +20,6 @@ const { data } = useQuery({
     <v-container>
         <v-responsive v-if="data">
             <v-row>
-                <v-col cols="12">
-                    <h4 class="text-h4">Estado do pátio</h4>
-                </v-col>
                 <v-col sm="12" md="4">
                     <big-number-card
                         :number="data?.stopped_containers"
@@ -41,6 +39,49 @@ const { data } = useQuery({
                         number-suffix="%"
                         description="espaço em uso"
                     />
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col sm="12" md="6">
+                    <v-card title="Média de containers parados por empresa">
+                        <apexchart
+                            type="bar"
+                            :options="
+                                barCustomDataLabelConfig(
+                                    data.companies_container_avg_day.map(
+                                        (i) => i.company
+                                    )
+                                )
+                            "
+                            :series="[
+                                {
+                                    data: data.companies_container_avg_day.map(
+                                        (i) => i.avgDay
+                                    ),
+                                },
+                            ]"
+                        ></apexchart>
+                    </v-card>
+                </v-col>
+                <v-col sm="12" md="6">
+                    <v-card title="Uso do pátio nos últimos 30 dias">
+                        <apexchart
+                            type="line"
+                            :options="
+                                lineChartConfig(
+                                    data.usage_history.map((i) => i.date)
+                                )
+                            "
+                            :series="[
+                                {
+                                    name: 'percentual de uso',
+                                    data: data.usage_history.map(
+                                        (i) => i.usage
+                                    ),
+                                },
+                            ]"
+                        />
+                    </v-card>
                 </v-col>
             </v-row>
             <v-row>
@@ -78,29 +119,6 @@ const { data } = useQuery({
                                 ]"
                             />
                         </v-card-item>
-                    </v-card>
-                </v-col>
-            </v-row>
-            <v-row>
-                <v-col sm="12" md="6">
-                    <v-card title="Média containers parados por empresa">
-                        <apexchart
-                            type="bar"
-                            :options="
-                                barCustomDataLabelConfig(
-                                    data.companies_container_avg_day.map(
-                                        (i) => i.company
-                                    )
-                                )
-                            "
-                            :series="[
-                                {
-                                    data: data.companies_container_avg_day.map(
-                                        (i) => i.avgDay
-                                    ),
-                                },
-                            ]"
-                        ></apexchart>
                     </v-card>
                 </v-col>
             </v-row>
