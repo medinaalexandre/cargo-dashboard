@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/vue-query';
 import { DashboardRequest } from '@/entities/Containers.types';
 import { reactive } from 'vue';
 import { TreemapConfig } from '@/components/charts/TreemapConfig';
+import barCustomDataLabelConfig from '@/components/charts/BarCustomDataLabelConfig';
 
 const filters: DashboardRequest = reactive<DashboardRequest>({});
 const fetchData = async () => await Container.dashboardData(filters);
@@ -21,20 +22,20 @@ const { data } = useQuery({
                 <v-col cols="12">
                     <h4 class="text-h4">Estado do pátio</h4>
                 </v-col>
-                <v-col cols="4">
+                <v-col sm="12" md="4">
                     <big-number-card
                         :number="data?.stopped_containers"
                         description="containers parados"
                     />
                 </v-col>
-                <v-col cols="4">
+                <v-col sm="12" md="4">
                     <big-number-card
                         number-prefix="R$"
                         :number="data?.contents_price"
                         description="valor em mercadorias"
                     />
                 </v-col>
-                <v-col cols="4">
+                <v-col sm="12" md="4">
                     <big-number-card
                         :number="data?.usage_percentage"
                         number-suffix="%"
@@ -43,9 +44,8 @@ const { data } = useQuery({
                 </v-col>
             </v-row>
             <v-row>
-                <v-col cols="6">
-                    <v-card>
-                        <v-card-title>Origens</v-card-title>
+                <v-col sm="12" lg="6">
+                    <v-card title="Origens">
                         <v-card-item>
                             <apexchart
                                 :options="TreemapConfig"
@@ -62,13 +62,12 @@ const { data } = useQuery({
                         </v-card-item>
                     </v-card>
                 </v-col>
-                <v-col cols="6">
-                    <v-card>
-                        <v-card-title>Destinos</v-card-title>
+                <v-col sm="12" md="12" lg="6">
+                    <v-card title="Destinos">
                         <v-card-item>
                             <apexchart
                                 :options="TreemapConfig"
-                                type="treemap"
+                                typ="treemap"
                                 :series="[
                                     {
                                         data: data.destinations.map((i) => ({
@@ -79,6 +78,29 @@ const { data } = useQuery({
                                 ]"
                             />
                         </v-card-item>
+                    </v-card>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col sm="12" md="6">
+                    <v-card title="Média containers parados por empresa">
+                        <apexchart
+                            type="bar"
+                            :options="
+                                barCustomDataLabelConfig(
+                                    data.companies_container_avg_day.map(
+                                        (i) => i.company
+                                    )
+                                )
+                            "
+                            :series="[
+                                {
+                                    data: data.companies_container_avg_day.map(
+                                        (i) => i.avgDay
+                                    ),
+                                },
+                            ]"
+                        ></apexchart>
                     </v-card>
                 </v-col>
             </v-row>

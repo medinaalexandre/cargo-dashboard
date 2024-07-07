@@ -28,12 +28,18 @@ interface LocationCount {
     count: number;
 }
 
+interface CompanyContainerAvgDay {
+    company: string;
+    avgDay: number;
+}
+
 export interface DashboardDataResponse {
     stopped_containers: number;
     contents_price: string;
     usage_percentage: number;
     destinations: Array<LocationCount>;
     origins: Array<LocationCount>;
+    companies_container_avg_day: Array<CompanyContainerAvgDay>;
 }
 
 export interface ContainerListRequest extends DashboardRequest {

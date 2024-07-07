@@ -1,6 +1,6 @@
 export const TreemapConfig = {
     chart: {
-        height: 350,
+        height: 450,
         type: 'treemap',
     },
     legend: {

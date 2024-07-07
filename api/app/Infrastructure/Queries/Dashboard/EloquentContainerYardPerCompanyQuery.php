@@ -15,7 +15,7 @@ final class EloquentContainerYardPerCompanyQuery implements ContainerYardPerComp
             ->selectRaw('company, AVG(EXTRACT(DAY FROM COALESCE(departure_at, NOW()) - arrival_at)) AS avg_day')
             ->groupBy('company')
             ->orderByRaw('avg_day DESC')
-            ->limit(30)
+            ->limit(15)
             ->get()
             ->map(fn (Container $container) => new CompanyContainerAvgDay(
                 $container->company,
