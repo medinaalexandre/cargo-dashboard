@@ -13,7 +13,7 @@ class GetDashboardDataArrayOutput implements GetDashboardDataOutputPort
         $numberFormatter = new \NumberFormatter('pt_BR', \NumberFormatter::PADDING_POSITION);
         $usageHistory = array_map(fn ($item) => [
             'date' => Carbon::parse($item['date'])->format('d/m/Y'),
-            'usage' => (float) number_format($item['usage'] * 100, 2)
+            'usage' => (float) number_format($item['usage'] * 100, 2),
         ], $data->usageHistory);
 
         return [

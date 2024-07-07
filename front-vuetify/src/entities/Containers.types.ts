@@ -54,3 +54,8 @@ export interface ContainerListRequest extends DashboardRequest {
 }
 
 export interface DashboardRequest {}
+
+export interface OriginAndDestinationsOptions {
+    origin: Array<string>;
+    destination: Array<string>;
+}

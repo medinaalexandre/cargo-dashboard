@@ -9,17 +9,22 @@ use Illuminate\Support\Facades\DB;
 
 class EloquentContainerYardUsageHistoryQuery implements ContainerYardUsageHistoryQuery
 {
-    public function execute(): array
+    use EloquentContainerFilter;
+
+    public function execute(array $filters): array
     {
-        return DB::table(DB::raw(
+        $query = DB::table(DB::raw(
             "(SELECT generate_series(NOW() - INTERVAL '30 DAYS', NOW(), '1 DAY')::date as date) date_series"
         ))->selectRaw('date_series.date, COUNT(*) as containers_count')
             ->leftJoin('containers', function (JoinClause $join) {
                 $join->on('date_series.date', '>=', DB::raw('containers.arrival_at::date'))
                     ->on('date_series.date', '<=', DB::raw('containers.departure_at::date'));
             })->groupBy('date_series.date')
-            ->orderBy('date_series.date')
-            ->get()
+            ->orderBy('date_series.date');
+
+        $this->applyFilters($query, $filters);
+
+        return $query->get()
             ->map(fn ($item) => new ContainerYardHistoryDay($item->date, $item->containers_count))
             ->toArray();
     }

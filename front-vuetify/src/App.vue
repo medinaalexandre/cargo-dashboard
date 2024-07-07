@@ -27,8 +27,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { provide, reactive, ref } from 'vue';
 import Filters from '@/components/sidebar/Filters.vue';
+import { FilterOptions } from '@/types';
 
 const theme = ref(localStorage.getItem('theme') ?? 'dark');
 const toggleTheme = () => {
@@ -38,4 +39,13 @@ const toggleTheme = () => {
 };
 
 const drawer = ref(true);
+const filters = reactive<FilterOptions>({
+    origin: [],
+    destination: [],
+    inspection_status: [],
+    packing_list: null,
+    items_count: null,
+});
+
+provide('filters', filters);
 </script>

@@ -17,19 +17,17 @@ class GetDashboardDataUseCase
         protected GetDashboardDataOutputPort $outputPort,
     ) {}
 
-    public function execute()
+    public function execute(array $filters)
     {
         $containerYard = new ContainerYard();
-
-        $containerYardStatus = $this->containerYardStatusQuery->execute();
-        $containerYardPerCompany = $this->containerYardPerCompanyQuery->execute();
-        $containerYardUsageHistory = $this->containerYardUsageHistoryQuery->execute();
-
+        $containerYardStatus = $this->containerYardStatusQuery->execute($filters);
+        $containerYardPerCompany = $this->containerYardPerCompanyQuery->execute($filters);
+        $containerYardUsageHistory = $this->containerYardUsageHistoryQuery->execute($filters);
 
         $usageHistory = array_map(function (ContainerYardHistoryDay $day) use ($containerYard) {
             return [
                 'date' => $day->date,
-                'usage' => $containerYard->getUsagePercentage($day->stoppedContainers)
+                'usage' => $containerYard->getUsagePercentage($day->stoppedContainers),
             ];
         }, $containerYardUsageHistory);
 

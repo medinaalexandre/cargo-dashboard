@@ -9,5 +9,5 @@ interface ContainerYardUsageHistoryQuery
     /**
      * @return ContainerYardHistoryDay[]
      */
-    public function execute(): array;
+    public function execute(array $filters): array;
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Containers\ListContainersController;
 use App\Http\Controllers\Dashboard\GetDashboardDataController;
+use App\Http\Controllers\Filters\OptionsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,3 +23,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/container', ListContainersController::class)->name('containers.list');
 Route::get('/dashboard', GetDashboardDataController::class)->name('dashboard.data');
+Route::get('/filters/options', OptionsController::class)->name('filter.options');

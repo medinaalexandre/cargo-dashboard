@@ -15,18 +15,19 @@ class ContainerFactory extends Factory
     {
         $arrivalAt = $this->faker->dateTimeInInterval('-1 year', '+1 year');
         $departureAt = clone $arrivalAt;
+        $companyNames = ['foo', 'bar', 'amazon', 'ebay'];
 
         return [
             'label' => strtoupper("{$this->faker->lexify()}-{$this->faker->numerify('#######')}-{$this->faker->lexify('?')}"),
-            'company' => $this->faker->company(),
+            'company' => $this->faker->randomElement($companyNames).' '.$this->faker->companySuffix(),
             'inspection_status' => $this->faker->randomElement(InspectionStatus::cases()),
             'packing_list' => $this->faker->text(300),
             'items_count' => $this->faker->numberBetween(1, 50),
             'arrival_at' => $arrivalAt,
             'departure_at' => $departureAt->add(new \DateInterval("P{$this->faker->numberBetween(1, 15)}D")),
             'weight' => $this->faker->randomFloat(2, 10),
-            'origin' => $this->faker->city(),
-            'destination' => $this->faker->city(),
+            'origin' => $this->faker->country(),
+            'destination' => $this->faker->country(),
             'capacity' => $this->faker->randomFloat(2, 1, 2),
             'contents_price_cents' => $this->faker->numberBetween(50000, 10000000),
         ];

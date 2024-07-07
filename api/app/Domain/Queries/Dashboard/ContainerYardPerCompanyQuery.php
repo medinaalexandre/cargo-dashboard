@@ -6,5 +6,5 @@ use App\Domain\ContainerYardPerCompanyDto;
 
 interface ContainerYardPerCompanyQuery
 {
-    public function execute(): ContainerYardPerCompanyDto;
+    public function execute(array $filters): ContainerYardPerCompanyDto;
 }

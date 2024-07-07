@@ -2,17 +2,20 @@
 import BigNumberCard from '@/components/BigNumberCard.vue';
 import { Container } from '@/entities/Container';
 import { useQuery } from '@tanstack/vue-query';
-import { DashboardRequest } from '@/entities/Containers.types';
-import { reactive } from 'vue';
+import { inject } from 'vue';
 import { TreemapConfig } from '@/components/charts/TreemapConfig';
 import barCustomDataLabelConfig from '@/components/charts/BarCustomDataLabelConfig';
 import lineChartConfig from '@/components/charts/LineChartConfig';
+import { FilterOptions } from '@/types';
 
-const filters: DashboardRequest = reactive<DashboardRequest>({});
+const filters: FilterOptions = inject('filters') as FilterOptions;
+
 const fetchData = async () => await Container.dashboardData(filters);
 const { data } = useQuery({
     queryKey: ['dashboard', filters],
     queryFn: fetchData,
+    staleTime: 30 * 1000,
+    gcTime: 30 * 1000,
 });
 </script>
 

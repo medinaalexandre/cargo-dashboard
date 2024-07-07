@@ -6,5 +6,5 @@ use App\Domain\ContainerYardStatusDto;
 
 interface ContainerYardStatusQuery
 {
-    public function execute(): ContainerYardStatusDto;
+    public function execute(array $filters): ContainerYardStatusDto;
 }

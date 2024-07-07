@@ -2,7 +2,8 @@
 
 namespace App\Domain;
 
-class ContainerYardPerCompanyDto {
+class ContainerYardPerCompanyDto
+{
     public function __construct(
         public array $companiesContainerAvgDay
     ) {}
