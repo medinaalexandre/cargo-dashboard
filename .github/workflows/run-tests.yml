@@ -36,7 +36,7 @@ jobs:
       - name: Run PHPUnit tests with coverage
         run: cd api && php artisan test --coverage-html coverage/
       - name: Upload coverage report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: coverage
           path: api/coverage/
