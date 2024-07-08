@@ -39,6 +39,18 @@ services:
     networks:
       - cargo-dashboard-network
 
+  node:
+      build: ./docker/node
+      ports:
+          - '3000:3000'
+      volumes:
+          - ../front-vuetify/:/var/www/app/
+      working_dir: /var/www/app
+      networks:
+          - cargo-dashboard-network
+      extra_hosts:
+          - host.docker.internal:host-gateway
+
 networks:
   cargo-dashboard-network:
     driver: bridge
