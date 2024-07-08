@@ -19,12 +19,11 @@ class ContainerSeeder extends Seeder
         )->create();
         Container::factory(16)->state([
             'origin' => 'Portugal',
-            'destination' => 'South Africa
-            ',
+            'destination' => 'South Africa',
         ])->create();
         Container::factory(32)->state([
-            'origin' => 'Miami',
-            'destination' => 'Rio Grande',
+            'origin' => 'Brazil',
+            'destination' => 'Argentina',
         ])->create();
     }
 }
