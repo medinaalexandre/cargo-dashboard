@@ -1,2 +1,0 @@
-echo 'Running lint'
-npm run --prefix front-vuetify lint

@@ -88,7 +88,7 @@ const { data } = useQuery({
                 </v-col>
             </v-row>
             <v-row>
-                <v-col sm="12" lg="6">
+                <v-col sm="12" md="6">
                     <v-card title="Origens">
                         <v-card-item>
                             <apexchart
@@ -106,7 +106,7 @@ const { data } = useQuery({
                         </v-card-item>
                     </v-card>
                 </v-col>
-                <v-col sm="12" md="12" lg="6">
+                <v-col sm="12" md="6">
                     <v-card title="Destinos">
                         <v-card-item>
                             <apexchart
