@@ -8,6 +8,9 @@
       <sourceFolder url="file://$MODULE_DIR$/api/tests" isTestSource="true" packagePrefix="Tests\" />
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/api/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/api/tests/Feature" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/api/tests/Unit" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/barryvdh/laravel-ide-helper" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/barryvdh/reflection-docblock" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/brick/math" />
@@ -136,6 +139,7 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/pestphp/pest-plugin-arch" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpdocumentor/reflection-docblock" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/ta-tikoma/phpunit-architecture-test" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/tijsverkoyen/css-to-inline-styles" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
