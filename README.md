@@ -2,9 +2,18 @@
 
 Aplicação fictícia para analisar os dados de um pátio de containers para exportação.
 
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
+[![api test](https://github.com/medinaalexandre/cargo-dashboard/actions/workflows/run-tests.yml/badge.svg)](https://github.com/medinaalexandre/cargo-dashboard/actions/workflows/run-tests.yml)
 ---
 
 <img src="./docs/assets/cargo-dashboard-devices.jpg">
+
+## Executando a aplicação
+Para executar a aplicação é necessário possuir o [Docker](https://www.docker.com/) instalado e rodar os seguintes comandos:
+```shell
+chmod +x build.sh
+./build.sh
+```
 
 ## 1. Tecnologias utilizadas
 ### 1.1 Front-end

@@ -1,0 +1,42 @@
+name: api test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  laravel-api-test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: testing
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    steps:
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+      - uses: actions/checkout@v4
+      - name: Copy .env
+        run: cd api && php -r "file_exists('.env') || copy('.env.ci', '.env');"
+      - name: Install Dependencies
+        run: cd api && composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: Generate key
+        run: cd api && php artisan key:generate
+      - name: Directory Permissions
+        run: cd api && chmod -R 777 storage bootstrap/cache
+      - name: Run PHPUnit tests with coverage
+        run: cd api && php artisan test --coverage-html coverage/
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage
+          path: api/coverage/
